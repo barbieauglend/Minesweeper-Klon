@@ -18,7 +18,7 @@ There are essentially four actions you can take in Minesweeper:
 
 - Open a square. This is done simply by left clicking on a square.
 - Marking a square as a mine. This is done by right clicking on a square. A little mine icon will show up there.
-- Clear any marks. Again, right click on the square. Right clicking cycles through the following states: Bomb, Question Mark, Clear.
+- Clear any marks. Again, right click on the square. Right clicking cycles through the following states: Bomb, Clear.
 - Opening all remaining adjacent squares to a number square. If for example you have a square with the number 1 and you have already marked one mine in one of the adjacent squares you can left click on the 1 square and the remaining adjacent squares will all be opened. This can save a lot of time while trying to quickly clear out squares. If you press on a number where not all adjacent mines have been marked, e.g. the number is 3 and you've only flagged one adjacent square, then the squares will not be opened, to prevent you from accidentally clicking on a number and blowing yourself up! In the old Windows version of this game you used both mouse buttons together to perform this action, but here we just use a normal left-click.
 
 Winning

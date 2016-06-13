@@ -418,21 +418,9 @@ public class MainWindowController implements Initializable
         }
         
 	@FXML
-        public void showHighScoreWindow() throws IOException{
-            FXMLLoader loaderhs = new FXMLLoader(getClass().getResource("HighScoresWindow.fxml"));
-            HighScoresWindowController controller = new HighScoresWindowController();
-            loaderhs.setController(controller);
-            loaderhs.setRoot(controller);
-            Parent root;
-            try {
-                    root = (Parent) loaderhs.load();
-                    Scene scenehs = new Scene(root, 320, 200);
-                    Stage stagehs = new Stage();
-                    stagehs.setScene(scenehs);
-                    stagehs.show();
-            } catch (IOException ex) {
-                System.out.println (ex.toString());
-            }
-        }
+        public void showHighScoreWindow(Stage stage) throws Exception
+	{
+		
+	}
  
 }

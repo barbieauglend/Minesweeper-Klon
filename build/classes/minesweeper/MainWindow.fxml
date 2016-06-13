@@ -14,8 +14,8 @@
 		<MenuBar>
 			<menus>
 				<Menu mnemonicParsing="true" text="_Spiel">
-					<MenuItem accelerator="F2" onAction="#StartANewGame" text="Neues Spiel" />
-               <MenuItem mnemonicParsing="false" onAction="#showHighScoreWindow" text="HighScore" />
+					<MenuItem accelerator="F2" onAction="#StartANewGame" text="_Neues Spiel" />
+               <MenuItem mnemonicParsing="false" text="_HighScore" />
                <MenuItem accelerator="Ctrl+Q" mnemonicParsing="true" onAction="#Quit" text="_Beenden" /> 
 				</Menu>
 				<Menu fx:id="mnuDifficulty" text="Level" />

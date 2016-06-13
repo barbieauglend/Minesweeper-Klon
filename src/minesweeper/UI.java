@@ -8,12 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class UI extends Application
-        
-        public static void main(String[] args)
-	{
-		launch(args);
-	}
-{
+        {
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -41,6 +36,11 @@ public class UI extends Application
 		stage.setResizable(false);
 		stage.setScene(scene);
 		stage.show();
+	}
+        
+        public static void main(String[] args)
+	{
+		launch(args);
 	}
 
 }

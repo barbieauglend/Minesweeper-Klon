@@ -78,6 +78,7 @@ public class MainWindowController implements Initializable
 			{
 				Platform.runLater(() ->
 				{
+                                    
 					if (_playing) SetTimerLabel();
 				});
 			}

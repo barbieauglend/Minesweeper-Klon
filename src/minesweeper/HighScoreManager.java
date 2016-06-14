@@ -34,7 +34,7 @@ public final class HighScoreManager implements Serializable {
     public void addScore(String level, HighScore s) throws IOException {
         HighScore highscore = getScore(level);
         if(s.getScore() < highscore.getScore()){
-            scores.put(level.toString(), s);
+            scores.put(level, s);
         }
         saveScores();
     }

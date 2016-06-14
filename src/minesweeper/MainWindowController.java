@@ -53,8 +53,9 @@ public class MainWindowController implements Initializable
 	private int _minesLeft;
 	private Timer _timer;
 	private int _secondsElapsed;
-        public HighScore Highscore;
+        public HighScore hs;
         public HighScoresWindowController hsc;
+        public HighScoreManager hsm;
 	
 	@FXML MenuItem mnuNew;
 	@FXML Menu mnuDifficulty;
@@ -68,7 +69,6 @@ public class MainWindowController implements Initializable
 	public void initialize(URL url, ResourceBundle rb)
 	{
 		_difficultyLevel = Level.Kinderleicht;
-                Highscore = new HighScore();
 		_random = new Random();
 		_timer = new Timer();
 		_timer.schedule(new TimerTask()
@@ -158,12 +158,12 @@ public class MainWindowController implements Initializable
 		lblTimer.setText(String.format("%d:%02d", minutes, seconds));
 	}
 	
-	private void Click(int x, int y)
+	private void Click(int x, int y) throws IOException
 	{
 		Click(null, _buttons[x][y], x, y, true);
 	}
 	
-	private void Click(MouseEvent e, Button b, int x, int y, boolean recursed)
+	private void Click(MouseEvent e, Button b, int x, int y, boolean recursed) throws IOException
 	{
 		if (e != null && e.getButton() == MouseButton.SECONDARY)
 		{
@@ -184,7 +184,7 @@ public class MainWindowController implements Initializable
 		ToggleFlag(b);
 	}
 	
-	private void LeftClick(Button b, int x, int y)
+	private void LeftClick(Button b, int x, int y) throws IOException
 	{
 		if (b.getGraphic() != null)
 		{
@@ -221,7 +221,12 @@ public class MainWindowController implements Initializable
 		Button b = new Button();
 		b.setMinSize(size, size);
 		b.setMaxSize(size, size);
-		b.setOnMouseClicked(event -> Click(event, b, x, y, false));
+		b.setOnMouseClicked(event -> {
+                    try {
+                        Click(event, b, x, y, false);
+                    } catch (IOException ex) {
+                    }
+                });
 		b.setOnMousePressed(event -> SetFace("images/surprised.png"));
 		b.setOnMouseReleased(event -> SetFace("images/happy.png"));
 		b.setStyle("-fx-font-weight: bold;");
@@ -249,7 +254,7 @@ public class MainWindowController implements Initializable
 		minesLeft.setText(Integer.toString(_minesLeft));
 	}
 	
-	private void SetZero(Button b, int x, int y)
+	private void SetZero(Button b, int x, int y) throws IOException
 	{
 		
 		if (x > 0 && y > 0) Click(x - 1, y - 1);
@@ -318,7 +323,7 @@ public class MainWindowController implements Initializable
 		b.setGraphic(null);
 	}
 	
-	private void CheckIfWon()
+	private void CheckIfWon() throws IOException
 	{
 		int clickedCount = 0;
 		for (int x = 0; x < _width; x++)
@@ -338,7 +343,8 @@ public class MainWindowController implements Initializable
                     onPlay.setText("Gewonnen!");
                     String playerName = getPlayerName();
                     GameOver("images/flag.png", "Du hast alle Minen gefunden!", "Glückwunsch!", "images/cool.png");
-                    Highscore.setHighScore(_difficultyLevel, playerName, _secondsElapsed);
+                    hs = new HighScore(playerName, _secondsElapsed);
+                    hsm.addScore(_difficultyLevel, hs);
 		}
 	}
 	
@@ -418,9 +424,14 @@ public class MainWindowController implements Initializable
         }
         
 	@FXML
-        public void showHighScoreWindow(Stage stage) throws Exception
-	{
-		
-	}
- 
+        public void showHighScoreWindow(){            
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HighScoresWindow.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root1));  
+                stage.show();
+                } catch(Exception e) {
+                }
+        }
 }

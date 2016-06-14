@@ -53,9 +53,7 @@ public class MainWindowController implements Initializable
 	private int _minesLeft;
 	private Timer _timer;
 	private int _secondsElapsed;
-        public HighScore hs;
         public HighScoresWindowController hsc;
-        public HighScoreManager hsm;
 	
 	@FXML MenuItem mnuNew;
 	@FXML Menu mnuDifficulty;
@@ -64,14 +62,13 @@ public class MainWindowController implements Initializable
 	@FXML Label minesLeft;
 	@FXML VBox mainArea;
         @FXML Label onPlay;
-	
+        
 	@Override
-	public void initialize(URL url, ResourceBundle rb)
-	{
-		_difficultyLevel = Level.Kinderleicht;
-		_random = new Random();
-		_timer = new Timer();
-		_timer.schedule(new TimerTask()
+	public void initialize(URL url, ResourceBundle rb) {
+            _difficultyLevel = Level.Kinderleicht;
+            _random = new Random();
+            _timer = new Timer();
+            _timer.schedule(new TimerTask()
 		{
 			@Override
 			public void run()
@@ -91,6 +88,7 @@ public class MainWindowController implements Initializable
 	{
 		_stage = stage;
 		_stage.setTitle("Minesweeper - Klon");
+                
 	}
 	
 	private void LoadLevels()
@@ -112,7 +110,8 @@ public class MainWindowController implements Initializable
 	@FXML
 	private void StartANewGame()
 	{
-		mainArea.getChildren().clear();
+		
+                mainArea.getChildren().clear();
 		_minefield = new Minefield(_difficultyLevel, _random);
 		lblTimer.setText("0:00");
 		_minesLeft = _minefield.MineCount();
@@ -325,28 +324,24 @@ public class MainWindowController implements Initializable
 	
 	private void CheckIfWon() throws IOException
 	{
-		int clickedCount = 0;
-		for (int x = 0; x < _width; x++)
-		{
-			for (int y = 0; y < _height; y++)
-			{
-				if (WasClicked(_buttons[x][y]))
-				{
-					clickedCount++;
-				}
-			}
-		}
-		
-		final int totalCells = _width * _height;
-		if (clickedCount >= totalCells - _minefield.MineCount())
-		{
+            int clickedCount = 0;
+            for (int x = 0; x < _width; x++){
+                for (int y = 0; y < _height; y++){
+                    if (WasClicked(_buttons[x][y])){
+                        clickedCount++;
+                    }
+                }
+            }
+            final int totalCells = _width * _height;
+                if (clickedCount >= totalCells - _minefield.MineCount()){
                     onPlay.setText("Gewonnen!");
+                    HighScoreManager hsm = new HighScoreManager();
                     String playerName = getPlayerName();
+                    HighScore hs = new HighScore(playerName, _secondsElapsed);
+                    hsm.addScore(_difficultyLevel.toString(), hs);
                     GameOver("images/flag.png", "Du hast alle Minen gefunden!", "Glückwunsch!", "images/cool.png");
-                    hs = new HighScore(playerName, _secondsElapsed);
-                    hsm.addScore(_difficultyLevel, hs);
-		}
-	}
+                }
+        }
 	
 	private boolean WasClicked(Button b)
 	{
@@ -408,11 +403,11 @@ public class MainWindowController implements Initializable
 	}
         
         public static String getPlayerName(){
-            TextInputDialog playerName = new TextInputDialog();
+            TextInputDialog playerName = new TextInputDialog("Name");
             playerName.setTitle("HighScore");
             playerName.setHeaderText(null);
             playerName.setContentText("Spielername eingeben: " );
-            ButtonType ok = new ButtonType("ok", ButtonData.OK_DONE);
+            ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
             ButtonType cancel = new ButtonType("Beenden", ButtonData.CANCEL_CLOSE);
             playerName.getDialogPane().getButtonTypes().setAll(ok, cancel);
             Optional<String> result = playerName.showAndWait();

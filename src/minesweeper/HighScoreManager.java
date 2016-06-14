@@ -1,59 +1,68 @@
 package minesweeper;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Hashtable;
 
-public class HighScoreManager implements Serializable {
+public final class HighScoreManager implements Serializable {
         
-    private Hashtable<Level, HighScore> scores;
+    private Hashtable<String, HighScore> scores;
     File file;
 
-    public HighScoreManager() {
-        scores = new Hashtable<Level, HighScore>(); 
-        file = new File("minesweeper/images/highscore.txt");
+    @SuppressWarnings("Convert2Diamond")
+    public HighScoreManager() throws IOException {
+        scores = new Hashtable<String, HighScore>(); 
+        file = new File("highscore.txt");
+        initialScores();
     }
-
-    public void addScore(Level level, HighScore s) throws IOException {
-        HighScore highscore = getScore(level);
-        if(s.getScore() > highscore.getScore()){
-        scores.put(level, s);
+    
+    public void initialScores() throws IOException{
+        HighScore joker = new HighScore("not you", 9999);
+        scores.put("Kinderleicht", joker);
+        scores.put("Normal", joker);
+        scores.put("Schwer", joker);
+        scores.put("McGyver", joker);
         saveScores();
-        }
     }
 
-    public HighScore getScore(Level level) {
+    public void addScore(String level, HighScore s) throws IOException {
+        HighScore highscore = getScore(level);
+        if(s.getScore() < highscore.getScore()){
+            scores.put(level.toString(), s);
+        }
+        saveScores();
+    }
+
+    public HighScore getScore(String level) {
         return scores.get(level);
     }
 
     private void saveScores() throws IOException {
-        try{
+        /*try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(scores.toString());
         }catch (Exception e){
-            e.printStackTrace();
-        }
+        }*/
         
-        /**FileOutputStream fos = new FileOutputStream("minesweeper/images/highscore.txt");
+        FileOutputStream fos = new FileOutputStream(file);
+            if(!file.exists()){
+            file.createNewFile();
+                }
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(scores);
-        oos.close();
-        fos.close();*/
-    }
+        }
     
-    public Hashtable <Level, HighScore> loadScores() throws IOException, ClassNotFoundException {
-        FileInputStream reader = new FileInputStream("minesweeper/images/highscore.txt");
-        ObjectInputStream buffer = new ObjectInputStream(reader);
-        Object obj=buffer.readObject();
-        scores = (Hashtable <Level, HighScore>)obj;
-        buffer.close();
-        reader.close();
-        return scores;
+    public Hashtable loadScores() throws FileNotFoundException, IOException, ClassNotFoundException{
+        FileInputStream fileIn = new FileInputStream(file);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        Hashtable h = (Hashtable)in.readObject();
+        return h;
     }
 }
     

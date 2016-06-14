@@ -1,13 +1,14 @@
 package minesweeper;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Hashtable;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 public class HighScoresWindowController implements Initializable {
 
@@ -30,20 +31,24 @@ public class HighScoresWindowController implements Initializable {
     
     private final HighScoreManager hsm;
     
-    public HighScoresWindowController() {
+    public HighScoresWindowController() throws IOException {
         hsm = new HighScoreManager();
     }
 
     @Override
   public void initialize(URL location, ResourceBundle resources) {
-    loadData();
+        try {
+            loadData();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
   }
 
-  public void loadData() {
-    HighScore bestTimeKinderleicht = hsm.getScore(Level.Kinderleicht);
-    HighScore bestTimeNormal = hsm.getScore(Level.Normal);
-    HighScore bestTimeSchwer = hsm.getScore(Level.Schwer);
-    HighScore bestTimeMcGyver = hsm.getScore(Level.McGyver);
+  public void loadData() throws IOException, FileNotFoundException, ClassNotFoundException {
+    Hashtable H = hsm.loadScores();
+    HighScore bestTimeKinderleicht = hsm.getScore("Kinderleicht");
+    HighScore bestTimeNormal = hsm.getScore("Normal");
+    HighScore bestTimeSchwer = hsm.getScore("Schwer");
+    HighScore bestTimeMcGyver = hsm.getScore("McGyver");
 
     lblTimeKinderleicht.setText(bestTimeKinderleicht.getScore() + " secondes");
     lblNameKinderleicht.setText(bestTimeKinderleicht.getName());

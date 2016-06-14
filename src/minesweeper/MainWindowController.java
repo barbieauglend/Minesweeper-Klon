@@ -36,6 +36,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -419,14 +421,17 @@ public class MainWindowController implements Initializable
         }
         
 	@FXML
-        public void showHighScoreWindow(){            
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HighScoresWindow.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root1));  
-                stage.show();
-                } catch(Exception e) {
-                }
+        public void showHighScoreWindow() throws IOException{            
+               
+            Pane subPane = (Pane) FXMLLoader.load(getClass().getResource("HighScoresWindow.fxml"));
+       
+            StackPane subLayout = new StackPane();
+            subLayout.getChildren().add(subPane);
+            Scene subScene = new Scene(subLayout);
+            Stage subStage = new Stage();
+            subStage.setScene(subScene);
+            subStage.setTitle("HighScores");
+            subStage.show();
         }
+        
 }

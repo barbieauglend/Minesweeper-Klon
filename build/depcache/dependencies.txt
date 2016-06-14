@@ -28,6 +28,7 @@ java.lang.Class
 javafx.scene.layout.VBox
 java.io.IOException
 javafx.scene.control.Alert
+javafx.scene.layout.StackPane
 java.lang.String
 javafx.scene.control.Menu
 minesweeper.Level
@@ -36,7 +37,6 @@ javafx.scene.control.ButtonType
 javafx.geometry.Insets
 javafx.scene.control.Button
 java.util.Optional
-java.lang.Exception
 java.lang.invoke.MethodHandles$Lookup
 javafx.scene.control.CheckMenuItem
 java.util.stream.Stream
@@ -49,7 +49,6 @@ minesweeper.HighScore
 javafx.scene.canvas.Canvas
 java.lang.invoke.MethodHandles
 java.lang.Integer
-minesweeper.HighScoresWindowController
 java.util.List
 java.lang.invoke.LambdaMetafactory
 javafx.scene.canvas.GraphicsContext
@@ -58,6 +57,7 @@ javafx.scene.image.Image
 java.util.Random
 javafx.scene.paint.Color
 javafx.scene.control.TextInputDialog
+javafx.scene.layout.Pane
 javafx.scene.layout.BackgroundFill
 javafx.stage.Stage
 javafx.scene.Scene
@@ -72,7 +72,6 @@ minesweeper.MainWindowController$1
 javafx.scene.input.MouseButton
 javafx.scene.layout.CornerRadii
 javafx.fxml.Initializable
-javafx.scene.Parent
 javafx.scene.control.Alert$AlertType
 [[Ljavafx.scene.control.Button;
 java.util.Timer
@@ -83,6 +82,14 @@ minesweeper.Minefield$1
 minesweeper.Level
 java.lang.NoSuchFieldError
 minesweeper.Minefield
+||:minesweeper.StartHSFenster
+javafx.stage.Stage
+minesweeper.StartHSFenster
+javafx.scene.control.Button
+javafx.scene.layout.StackPane
+javafx.collections.ObservableList
+javafx.scene.Scene
+javafx.application.Application
 ||:minesweeper.MainWindowController$1
 minesweeper.MainWindowController
 java.lang.invoke.MethodHandles$Lookup
@@ -122,6 +129,16 @@ java.lang.RuntimeException
 java.lang.invoke.LambdaMetafactory
 java.lang.Exception
 java.lang.invoke.MethodHandles
+||:minesweeper.UI$1
+javafx.event.EventHandler
+javafx.fxml.FXMLLoader
+minesweeper.StartHSFenster
+javafx.stage.Stage
+java.lang.Class
+minesweeper.UI
+minesweeper.UI$1
+javafx.event.ActionEvent
+java.lang.Object
 ||:minesweeper.Level
 java.lang.String
 [Lminesweeper.Level;

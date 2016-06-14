@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane accessibleRole="MENU_ITEM" minHeight="-Infinity" minWidth="-Infinity" prefHeight="222.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane accessibleRole="MENU_ITEM" minHeight="-Infinity" minWidth="-Infinity" prefHeight="222.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeper.HighScoresWindowController">
    <center>
       <GridPane alignment="CENTER" prefHeight="209.0" prefWidth="350.0" BorderPane.alignment="CENTER">
         <columnConstraints>

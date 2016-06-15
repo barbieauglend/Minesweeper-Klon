@@ -425,7 +425,6 @@ public class MainWindowController implements Initializable
             String playerName = getPlayerName();
             HighScore hs = new HighScore(playerName, _secondsElapsed);
             hsm.addScore(_difficultyLevel.toString(), hs);
-            hsc.loadData(_difficultyLevel);
         }
         
 	@FXML

@@ -17,8 +17,6 @@ java.lang.ClassNotFoundException
 java.util.Hashtable
 java.lang.Object
 java.io.IOException
-minesweeper.Level
-java.lang.Integer
 java.lang.Exception
 ||:minesweeper.HighScore
 java.lang.Object

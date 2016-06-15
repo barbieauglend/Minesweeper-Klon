@@ -29,7 +29,7 @@ public class HighScoresWindowController implements Initializable {
     @FXML
     Label lblNameMcGyver;
     
-    private final HighScoreManager hsm;
+    private HighScoreManager hsm;
     
     public HighScoresWindowController() throws IOException{
         hsm = new HighScoreManager();
@@ -45,50 +45,24 @@ public class HighScoresWindowController implements Initializable {
 
   public void loadData() throws IOException, FileNotFoundException, ClassNotFoundException {
     Hashtable H = hsm.loadScores();
-    HighScore bestTimeKinderleicht = hsm.getScore("Kinderleicht");
-    HighScore bestTimeNormal = hsm.getScore("Normal");
-    HighScore bestTimeSchwer = hsm.getScore("Schwer");
-    HighScore bestTimeMcGyver = hsm.getScore("McGyver");
+    HighScore bestTimeMcGyver = (HighScore) H.get("MyGyver");
+    HighScore bestTimeSchwer = (HighScore) H.get("Schwer");
+    HighScore bestTimeNormal = (HighScore) H.get("Normal");
+    HighScore bestTimeKinderleicht = (HighScore) H.get("Kinderleicht");
 
-    lblTimeKinderleicht.setText(bestTimeKinderleicht.getScore() + " secondes");
+    lblTimeKinderleicht.setText(bestTimeKinderleicht.getScore() + " Sekunden");
     lblNameKinderleicht.setText(bestTimeKinderleicht.getName());
 
-    lblTimeNormal.setText(bestTimeNormal.getScore() + " secondes");
+    lblTimeNormal.setText(bestTimeNormal.getScore() + " Sekunden");
     lblNameNormal.setText(bestTimeNormal.getName());
 
-    lblTimeSchwer.setText(bestTimeSchwer.getScore() + " secondes");
+    lblTimeSchwer.setText(bestTimeSchwer.getScore() + " Sekunden");
     lblNameSchwer.setText(bestTimeSchwer.getName());
     
-    lblTimeMcGyver.setText(bestTimeMcGyver.getScore() + " secondes");
+    lblTimeMcGyver.setText(bestTimeMcGyver.getScore() + " Sekunden");
     lblNameMcGyver.setText(bestTimeMcGyver.getName());
   }
-  
-  public void loadData(Level level) throws IOException, FileNotFoundException, ClassNotFoundException{
-    Hashtable H = hsm.loadScores();    
-    
-    if(level == Level.Kinderleicht){
-        HighScore bestTimeKinderleicht = hsm.getScore("Kinderleicht");
-        lblTimeKinderleicht.setText(Integer.toString(bestTimeKinderleicht.getScore()) + " secondes");
-        lblNameKinderleicht.setText(bestTimeKinderleicht.getName());
-    }
-    
-    if(level == Level.Normal){
-        HighScore bestTimeNormal = hsm.getScore("Normal");
-        lblTimeNormal.setText(Integer.toString(bestTimeNormal.getScore()) + " secondes");
-        lblNameNormal.setText(bestTimeNormal.getName());
-    }
-    
-    if(level == Level.Schwer){
-        HighScore bestTimeSchwer = hsm.getScore("Schwer");
-        lblTimeSchwer.setText(Integer.toString(bestTimeSchwer.getScore()) + " secondes");
-        lblNameSchwer.setText(bestTimeSchwer.getName());
-    }
-    
-    if(level == Level.McGyver){
-        HighScore bestTimeMcGyver = hsm.getScore("McGyver");
-        lblTimeSchwer.setText(Integer.toString(bestTimeMcGyver.getScore()) + " secondes");
-        lblNameSchwer.setText(bestTimeMcGyver.getName());
-    }
+
 }
 
 
@@ -111,4 +85,3 @@ public class HighScoresWindowController implements Initializable {
                 loadData();
             }
     }*/
-}

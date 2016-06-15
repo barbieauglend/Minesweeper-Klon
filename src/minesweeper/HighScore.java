@@ -10,7 +10,7 @@ public class HighScore implements Serializable {
     public int getScore() {
         return score;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -18,10 +18,5 @@ public class HighScore implements Serializable {
     public HighScore(String name, int score) {
         this.score = score;
         this.name = name;
-    }
-    
-    public String toString(HighScore score){
-        String hs = Integer.toString(score.getScore());
-        return score.getName() + "  "  + hs;
     }
 }

@@ -1,5 +1,6 @@
 package minesweeper;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -14,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -55,7 +55,6 @@ public class MainWindowController implements Initializable
 	private int _minesLeft;
 	private Timer _timer;
 	private int _secondsElapsed;
-        public HighScoresWindowController hsc;
 	
 	@FXML MenuItem mnuNew;
 	@FXML Menu mnuDifficulty;
@@ -161,10 +160,13 @@ public class MainWindowController implements Initializable
 	
 	private void Click(int x, int y) throws IOException
 	{
-		Click(null, _buttons[x][y], x, y, true);
+            try {
+                Click(null, _buttons[x][y], x, y, true);
+            } catch (FileNotFoundException | ClassNotFoundException ex) {
+            }
 	}
 	
-	private void Click(MouseEvent e, Button b, int x, int y, boolean recursed) throws IOException
+	private void Click(MouseEvent e, Button b, int x, int y, boolean recursed) throws IOException, FileNotFoundException, ClassNotFoundException
 	{
 		if (e != null && e.getButton() == MouseButton.SECONDARY)
 		{
@@ -225,7 +227,7 @@ public class MainWindowController implements Initializable
 		b.setOnMouseClicked(event -> {
                     try {
                         Click(event, b, x, y, false);
-                    } catch (IOException ex) {
+                    } catch (IOException | ClassNotFoundException ex) {
                     }
                 });
 		b.setOnMousePressed(event -> SetFace("images/surprised.png"));
@@ -324,7 +326,7 @@ public class MainWindowController implements Initializable
 		b.setGraphic(null);
 	}
 	
-	private void CheckIfWon() throws IOException
+	private void CheckIfWon() throws IOException, FileNotFoundException, ClassNotFoundException
 	{
             int clickedCount = 0;
             for (int x = 0; x < _width; x++){
@@ -337,10 +339,7 @@ public class MainWindowController implements Initializable
             final int totalCells = _width * _height;
                 if (clickedCount >= totalCells - _minefield.MineCount()){
                     onPlay.setText("Gewonnen!");
-                    HighScoreManager hsm = new HighScoreManager();
-                    String playerName = getPlayerName();
-                    HighScore hs = new HighScore(playerName, _secondsElapsed);
-                    hsm.addScore(_difficultyLevel.toString(), hs);
+                    gewinnSpeichern();
                     GameOver("images/flag.png", "Du hast alle Minen gefunden!", "Glückwunsch!", "images/cool.png");
                 }
         }
@@ -418,6 +417,19 @@ public class MainWindowController implements Initializable
             }else{
                     return null;
             }
+        }
+        
+        public void gewinnSpeichern() throws IOException, FileNotFoundException, ClassNotFoundException{
+            HighScoreManager hsm = new HighScoreManager();
+            HighScoresWindowController hsc = new HighScoresWindowController();
+            String playerName = getPlayerName();
+            HighScore hs = new HighScore(playerName, _secondsElapsed);
+            hsm.addScore(_difficultyLevel.toString(), hs);
+<<<<<<< Updated upstream
+            hsc.loadData();
+=======
+            hsc.loadData(_difficultyLevel);
+>>>>>>> Stashed changes
         }
         
 	@FXML

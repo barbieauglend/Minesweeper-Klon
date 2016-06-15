@@ -12,14 +12,17 @@ import java.util.Hashtable;
 
 public final class HighScoreManager implements Serializable {
         
-    private Hashtable<String, HighScore> scores;
+    private final Hashtable<String, HighScore> scores;
     File file;
+    
 
     @SuppressWarnings("Convert2Diamond")
     public HighScoreManager() throws IOException {
         scores = new Hashtable<String, HighScore>(); 
         file = new File("highscore.txt");
+        //if(!file.exists()){
         initialScores();
+        //}
     }
     
     public void initialScores() throws IOException{
@@ -31,7 +34,7 @@ public final class HighScoreManager implements Serializable {
         saveScores();
     }
 
-    public void addScore(String level, HighScore s) throws IOException {
+    public void addScore(String level, HighScore s) throws IOException{
         HighScore highscore = getScore(level);
         if(s.getScore() < highscore.getScore()){
             scores.put(level, s);

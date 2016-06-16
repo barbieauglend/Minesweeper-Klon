@@ -5,67 +5,58 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.Hashtable;
+import java.util.Properties;
 
 public final class HighScoreManager implements Serializable {
-        
-    private final Hashtable<String, HighScore> scores;
-    File file;
-    
 
-    @SuppressWarnings("Convert2Diamond")
-    public HighScoreManager() throws IOException {
-        scores = new Hashtable<String, HighScore>(); 
-        file = new File("highscore.txt");
-        //if(!file.exists()){
-        initialScores();
-        //}
-    }
-    
-    public void initialScores() throws IOException{
-        HighScore joker = new HighScore("not you", 9999);
-        scores.put("Kinderleicht", joker);
-        scores.put("Normal", joker);
-        scores.put("Schwer", joker);
-        scores.put("McGyver", joker);
-        saveScores();
-    }
+	private final Properties scores;
+	private final InputStream in;
 
-    public void addScore(String level, HighScore s) throws IOException{
-        HighScore highscore = getScore(level);
-        if(s.getScore() < highscore.getScore()){
-            scores.put(level, s);
-        }
-        saveScores();
-    }
+	public HighScoreManager() throws IOException {
+		scores = new Properties();
+		File f = new File("highscores.properties");
+		if (!f.exists()) {
+			initialScores(new FileOutputStream("highscores.properties"));
+		}
+		in = new FileInputStream("highscores.properties");
+		scores.load(in);
+	}
 
-    public HighScore getScore(String level) {
-        return scores.get(level);
-    }
+	public void initialScores(FileOutputStream out) throws IOException {
+		scores.setProperty("KinderleichtSpieler", "could be you");
+		scores.setProperty("KinderleichtScore", "9999");
+		scores.setProperty("NormalSpieler", "could be you");
+		scores.setProperty("NormalScore", "9999");
+		scores.setProperty("SchwerSpieler", "could be you");
+		scores.setProperty("SchwerScore", "9999");
+		scores.setProperty("McGyverSpieler", "could be you");
+		scores.setProperty("McGyverScore", "9999");
+		scores.store(out, null);
+	}
 
-    private void saveScores() throws IOException {
-        /*try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.write(scores.toString());
-        }catch (Exception e){
-        }*/
-        
-        FileOutputStream fos = new FileOutputStream(file);
-            if(!file.exists()){
-            file.createNewFile();
-                }
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(scores);
-        }
-    
-    public Hashtable loadScores() throws FileNotFoundException, IOException, ClassNotFoundException{
-        FileInputStream fileIn = new FileInputStream(file);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        Hashtable h = (Hashtable)in.readObject();
-        return h;
-    }
+	public void addScore(String levelName, String levelScore, String levelSpieler) throws IOException {
+		int aktuell = Integer.parseInt(getScore(levelName));
+		int newScore = Integer.parseInt(levelScore);
+		if (newScore < aktuell) {
+			scores.setProperty(levelName + "Spieler", levelSpieler);
+			scores.setProperty(levelName + "Score", levelScore);
+		}
+
+		scores.store(new FileOutputStream("highscores.properties"), null);
+	}
+
+	public String getScore(String levelName) {
+		return scores.getProperty(levelName + "Score");
+	}
+
+	public String getName(String levelName) {
+		return scores.getProperty(levelName + "Spieler");
+	}
+
+	public void update() throws IOException {
+		scores.load(in);
+	}
 }
-    

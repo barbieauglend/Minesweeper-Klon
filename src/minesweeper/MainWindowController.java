@@ -419,12 +419,10 @@ public class MainWindowController implements Initializable
             }
         }
         
-        public void gewinnSpeichern() throws IOException, FileNotFoundException, ClassNotFoundException{
+        public void gewinnSpeichern() throws IOException{
             HighScoreManager hsm = new HighScoreManager();
-            HighScoresWindowController hsc = new HighScoresWindowController();
             String playerName = getPlayerName();
-            HighScore hs = new HighScore(playerName, _secondsElapsed);
-            hsm.addScore(_difficultyLevel.toString(), hs);
+            hsm.addScore(_difficultyLevel.toString(), String.valueOf(_secondsElapsed), playerName);
         }
         
 	@FXML

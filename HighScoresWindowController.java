@@ -59,7 +59,7 @@ public class HighScoresWindowController implements Initializable {
 
 }
 
-/**
+/** keine Zeit mehr leider
  * @FXML public void deleteHighScores() { Alert alert = new
  *       Alert(Alert.AlertType.NONE); alert.getButtonTypes().clear();
  *       alert.getButtonTypes().addAll( new ButtonType("Highscore löschen",
@@ -67,7 +67,7 @@ public class HighScoresWindowController implements Initializable {
  *       ButtonBar.ButtonData.CANCEL_CLOSE) ); alert.setTitle("Highscore");
  *       alert.setHeaderText("Highscore löschen"); alert.setContentText(
  *       "Bist Du sicher, dass Du es löschen möchtest?");
- * 
+ *
  *       Optional<ButtonType> result = alert.showAndWait(); if
  *       (result.get().getButtonData() == ButtonBar.ButtonData.YES) {
  *       highScores.deleteHighScores(); loadData(); } }
